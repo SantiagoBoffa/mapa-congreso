@@ -18,7 +18,11 @@ export async function listLocal(): Promise<Organizacion[]> {
   await ensureFile();
   const raw = await fs.readFile(DATA_PATH, "utf8");
   const parsed = JSON.parse(raw) as unknown;
-  return Array.isArray(parsed) ? (parsed as Organizacion[]) : [];
+  if (!Array.isArray(parsed)) return [];
+  return (parsed as Organizacion[]).map((o) => ({
+    ...o,
+    descripcion: o.descripcion ?? "",
+  }));
 }
 
 export async function appendLocal(
@@ -28,6 +32,7 @@ export async function appendLocal(
   const org: Organizacion = {
     id: String(orgs.length + 1),
     nombre: input.nombre,
+    descripcion: input.descripcion,
     contacto: input.contacto,
     redes: input.redes,
     areas: input.areas as Area[],

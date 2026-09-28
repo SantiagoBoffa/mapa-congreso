@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Area } from "@/lib/areas";
 import type { MarkerItem, Organizacion } from "@/lib/types";
 import { AreaChips } from "./AreaChips";
+import { DescripcionExpandible } from "./DescripcionExpandible";
 import { MapaClient } from "./MapaClient";
 
 const PAGE_SIZE = 5;
@@ -174,6 +175,11 @@ export function LandingMapa({ organizaciones }: Props) {
                   <p className="mt-1 text-xs font-semibold text-[#d2f25a]">
                     {org.areas.join(" · ")}
                   </p>
+                  <DescripcionExpandible
+                    texto={org.descripcion}
+                    className="mt-1.5 text-sm leading-relaxed text-white/90"
+                    botonClassName="text-[#d2f25a]"
+                  />
                   <ul className="mt-1.5 space-y-0.5 text-sm text-white/85">
                     {org.sedes.map((s, i) => (
                       <li key={`${org.id}-list-${i}`}>{s.direccion}</li>

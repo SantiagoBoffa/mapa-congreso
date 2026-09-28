@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import {
   MapContainer,
   Marker,
@@ -11,6 +11,7 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import type { MarkerItem } from "@/lib/types";
+import { DescripcionExpandible } from "./DescripcionExpandible";
 
 function createPinIcon(color: string, accent = "#fff") {
   const svg = encodeURIComponent(`
@@ -107,62 +108,85 @@ export function Mapa({ markers, className = "", height }: MapaProps) {
         <FitBounds points={markers} />
         {markers.map((m) => (
           <Marker key={m.key} position={[m.lat, m.lng]} icon={pinPrincipal}>
-            <Popup
-              className="popup-ficha"
-              maxWidth={popupMaxWidth}
-              minWidth={Math.min(220, popupMaxWidth)}
-              autoPanPaddingTopLeft={[16, 48]}
-              autoPanPaddingBottomRight={[16, 16]}
-            >
-              <div className="popup-ficha__card">
-                <div className="popup-ficha__head">
-                  <p className="popup-ficha__titulo">{m.org.nombre}</p>
-                </div>
-                <div className="popup-ficha__body">
-                  <p className="popup-ficha__direccion">
-                    {m.org.sedes[m.sedeIndex]?.direccion}
-                  </p>
-                  {m.org.areas.length > 0 && (
-                    <div className="popup-ficha__chips">
-                      {m.org.areas.map((area) => (
-                        <span key={area} className="popup-ficha__chip">
-                          {area}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                  {(m.org.contacto || m.org.redes) && (
-                    <div className="popup-ficha__meta">
-                      {m.org.contacto && (
-                        <p>
-                          <span>Contacto</span>
-                          {m.org.contacto}
-                        </p>
-                      )}
-                      {m.org.redes && (
-                        <p>
-                          <span>Redes</span>
-                          {m.org.redes}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                  {m.org.sedes.length > 1 && (
-                    <p className="popup-ficha__otras">
-                      Otras sedes:{" "}
-                      {m.org.sedes
-                        .filter((_, i) => i !== m.sedeIndex)
-                        .map((s) => s.direccion)
-                        .join(" · ")}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </Popup>
+            <FichaPopup marker={m} maxWidth={popupMaxWidth} />
           </Marker>
         ))}
       </MapContainer>
     </div>
+  );
+}
+
+function FichaPopup({
+  marker: m,
+  maxWidth,
+}: {
+  marker: MarkerItem;
+  maxWidth: number;
+}) {
+  const popupRef = useRef<L.Popup | null>(null);
+
+  return (
+    <Popup
+      ref={popupRef}
+      className="popup-ficha"
+      maxWidth={maxWidth}
+      minWidth={Math.min(220, maxWidth)}
+      autoPanPaddingTopLeft={[16, 48]}
+      autoPanPaddingBottomRight={[16, 16]}
+    >
+      <div className="popup-ficha__card">
+        <div className="popup-ficha__head">
+          <p className="popup-ficha__titulo">{m.org.nombre}</p>
+        </div>
+        <div className="popup-ficha__body">
+          <p className="popup-ficha__direccion">
+            {m.org.sedes[m.sedeIndex]?.direccion}
+          </p>
+          {m.org.areas.length > 0 && (
+            <div className="popup-ficha__chips">
+              {m.org.areas.map((area) => (
+                <span key={area} className="popup-ficha__chip">
+                  {area}
+                </span>
+              ))}
+            </div>
+          )}
+          <DescripcionExpandible
+            texto={m.org.descripcion}
+            className="popup-ficha__descripcion"
+            botonClassName="popup-ficha__ver-mas"
+            onToggle={() =>
+              requestAnimationFrame(() => popupRef.current?.update())
+            }
+          />
+          {(m.org.contacto || m.org.redes) && (
+            <div className="popup-ficha__meta">
+              {m.org.contacto && (
+                <p>
+                  <span>Contacto</span>
+                  {m.org.contacto}
+                </p>
+              )}
+              {m.org.redes && (
+                <p>
+                  <span>Redes</span>
+                  {m.org.redes}
+                </p>
+              )}
+            </div>
+          )}
+          {m.org.sedes.length > 1 && (
+            <p className="popup-ficha__otras">
+              Otras sedes:{" "}
+              {m.org.sedes
+                .filter((_, i) => i !== m.sedeIndex)
+                .map((s) => s.direccion)
+                .join(" · ")}
+            </p>
+          )}
+        </div>
+      </div>
+    </Popup>
   );
 }
 

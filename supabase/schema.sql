@@ -3,6 +3,7 @@
 create table if not exists public.organizaciones (
   id uuid primary key default gen_random_uuid(),
   nombre text not null,
+  descripcion text not null default '',
   contacto text not null default '',
   redes text not null default '',
   areas text[] not null default '{}',
@@ -10,6 +11,10 @@ create table if not exists public.organizaciones (
   sedes jsonb not null default '[]'::jsonb,
   fecha timestamptz not null default now()
 );
+
+-- Para bases creadas antes de sumar la descripción
+alter table public.organizaciones
+  add column if not exists descripcion text not null default '';
 
 create index if not exists organizaciones_visible_idx
   on public.organizaciones (visible);

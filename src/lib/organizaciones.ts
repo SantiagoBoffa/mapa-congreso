@@ -6,6 +6,7 @@ import type { NuevaOrganizacion, Organizacion, Sede } from "./types";
 type OrgRow = {
   id: string;
   nombre: string;
+  descripcion?: string | null;
   contacto: string | null;
   redes: string | null;
   areas: string[] | null;
@@ -37,6 +38,7 @@ function rowToOrganizacion(row: OrgRow): Organizacion {
   return {
     id: row.id,
     nombre: row.nombre,
+    descripcion: row.descripcion ?? "",
     contacto: row.contacto ?? "",
     redes: row.redes ?? "",
     areas: parseAreas(row.areas),
@@ -46,10 +48,13 @@ function rowToOrganizacion(row: OrgRow): Organizacion {
   };
 }
 
+// `*` para que la lectura no falle en bases donde todavía no se agregó `descripcion`
+const COLUMNAS = "*";
+
 async function listFromSupabase(): Promise<Organizacion[]> {
   const { data, error } = await getSupabase()
     .from("organizaciones")
-    .select("id,nombre,contacto,redes,areas,visible,sedes,fecha")
+    .select(COLUMNAS)
     .order("fecha", { ascending: false });
 
   if (error) throw error;
@@ -59,18 +64,34 @@ async function listFromSupabase(): Promise<Organizacion[]> {
 async function createInSupabase(
   input: NuevaOrganizacion,
 ): Promise<Organizacion> {
-  const { data, error } = await getSupabase()
-    .from("organizaciones")
-    .insert({
-      nombre: input.nombre,
-      contacto: input.contacto,
-      redes: input.redes,
-      areas: input.areas,
-      visible: true,
-      sedes: input.sedes,
-    })
-    .select("id,nombre,contacto,redes,areas,visible,sedes,fecha")
-    .single();
+  const base = {
+    nombre: input.nombre,
+    contacto: input.contacto,
+    redes: input.redes,
+    areas: input.areas,
+    visible: true,
+    sedes: input.sedes,
+  };
+
+  const insert = (values: typeof base & { descripcion?: string }) =>
+    getSupabase()
+      .from("organizaciones")
+      .insert(values)
+      .select(COLUMNAS)
+      .single();
+
+  let { data, error } = await insert({
+    ...base,
+    descripcion: input.descripcion,
+  });
+
+  // PGRST204 = columna inexistente: la base no tiene la migración de `descripcion`
+  if (error?.code === "PGRST204") {
+    console.warn(
+      "Falta la columna organizaciones.descripcion (ver supabase/schema.sql); se guarda sin descripción.",
+    );
+    ({ data, error } = await insert(base));
+  }
 
   if (error) throw error;
   return rowToOrganizacion(data as OrgRow);
@@ -87,7 +108,7 @@ export async function listOrganizacionesVisibles(): Promise<Organizacion[]> {
   if (isSupabaseConfigured()) {
     const { data, error } = await getSupabase()
       .from("organizaciones")
-      .select("id,nombre,contacto,redes,areas,visible,sedes,fecha")
+      .select(COLUMNAS)
       .eq("visible", true)
       .order("fecha", { ascending: false });
 

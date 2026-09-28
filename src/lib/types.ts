@@ -9,6 +9,7 @@ export type Sede = {
 export type Organizacion = {
   id: string;
   nombre: string;
+  descripcion: string;
   contacto: string;
   redes: string;
   areas: Area[];
@@ -19,6 +20,7 @@ export type Organizacion = {
 
 export type NuevaOrganizacion = {
   nombre: string;
+  descripcion: string;
   contacto: string;
   redes: string;
   areas: Area[];

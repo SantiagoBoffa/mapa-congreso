@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Area } from "@/lib/areas";
+import { DESCRIPCION_MAX } from "@/lib/descripcion";
 import { submitOrganizacion, type FormState } from "@/app/actions";
 import { AddressPicker } from "./AddressPicker";
 import { AreaChips } from "./AreaChips";
@@ -14,6 +15,7 @@ export function FormularioFicha() {
   const router = useRouter();
   const [state, formAction, pending] = useActionState(submitOrganizacion, initial);
   const [nombre, setNombre] = useState("");
+  const [descripcion, setDescripcion] = useState("");
   const [contacto, setContacto] = useState("");
   const [redes, setRedes] = useState("");
   const [sedes, setSedes] = useState<Sede[]>([]);
@@ -43,6 +45,24 @@ export function FormularioFicha() {
           onChange={(e) => setNombre(e.target.value)}
           placeholder="Nombre de la organización"
           className="field-input"
+        />
+      </label>
+
+      <label className="block space-y-1.5">
+        <span className="flex items-baseline justify-between gap-2">
+          <span className="text-sm font-semibold text-white">Descripción</span>
+          <span className="text-xs font-semibold text-[#d2f25a]">
+            {descripcion.length}/{DESCRIPCION_MAX}
+          </span>
+        </span>
+        <textarea
+          name="descripcion"
+          rows={4}
+          maxLength={DESCRIPCION_MAX}
+          value={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
+          placeholder="Contá brevemente qué hacen y con quiénes trabajan"
+          className="field-input resize-y"
         />
       </label>
 

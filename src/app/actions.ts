@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { AREAS, type Area } from "@/lib/areas";
+import { DESCRIPCION_MAX } from "@/lib/descripcion";
 import { createOrganizacion } from "@/lib/organizaciones";
 import type { Sede } from "@/lib/types";
 
@@ -35,6 +36,14 @@ export async function submitOrganizacion(
     return { ok: false, message: "El nombre de la organización es obligatorio." };
   }
 
+  const descripcion = String(formData.get("descripcion") ?? "").trim();
+  if (descripcion.length > DESCRIPCION_MAX) {
+    return {
+      ok: false,
+      message: `La descripción puede tener hasta ${DESCRIPCION_MAX} caracteres.`,
+    };
+  }
+
   const contacto = String(formData.get("contacto") ?? "").trim();
   const redes = String(formData.get("redes") ?? "").trim();
 
@@ -59,7 +68,14 @@ export async function submitOrganizacion(
   }
 
   try {
-    await createOrganizacion({ nombre, contacto, redes, areas, sedes });
+    await createOrganizacion({
+      nombre,
+      descripcion,
+      contacto,
+      redes,
+      areas,
+      sedes,
+    });
     revalidatePath("/");
     return { ok: true, message: "¡Listo! La organización ya figura en el mapa." };
   } catch (err) {
