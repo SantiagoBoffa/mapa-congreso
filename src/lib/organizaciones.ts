@@ -16,7 +16,10 @@ type OrgRow = {
 
 function parseAreas(raw: string[] | null | undefined): Area[] {
   if (!raw?.length) return [];
-  return raw.filter((a): a is Area => (AREAS as readonly string[]).includes(a));
+  return raw.flatMap((a) => {
+    const nombre = a === "Medio ambiente" ? "Ambiente" : a;
+    return (AREAS as readonly string[]).includes(nombre) ? [nombre as Area] : [];
+  });
 }
 
 function parseSedes(raw: Sede[] | null | undefined): Sede[] {

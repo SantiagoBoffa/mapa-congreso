@@ -1,49 +1,57 @@
-import { BrandChevron, BrandMark } from "@/components/Brand";
+import Image from "next/image";
+import { BrandHook, BrandLockup, DateBadge } from "@/components/Brand";
 import { LandingMapa } from "@/components/LandingMapa";
-import { isUsingLocalStore, listOrganizacionesVisibles } from "@/lib/organizaciones";
+import { listOrganizacionesVisibles } from "@/lib/organizaciones";
 
 export const revalidate = 30;
 
 export default async function HomePage() {
   const organizaciones = await listOrganizacionesVisibles();
-  const local = isUsingLocalStore();
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-6 sm:py-12">
-      <header className="mb-10 space-y-6 sm:mb-12 sm:space-y-8">
-        <div className="flex items-center justify-center gap-3">
-          <BrandMark className="h-9 w-9 shrink-0" />
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#a2f25d]">
-            Congreso de Salud
-          </p>
+      <header className="relative mb-8 sm:mb-10">
+        {/* Logo y fecha alineados abajo, con el mismo aire hasta el título y el mapa */}
+        <div className="relative z-20 mb-4 flex items-center justify-between gap-4 sm:mb-5">
+          <BrandLockup variant="full" />
+          <DateBadge className="shrink-0" />
         </div>
 
-        <div className="grid grid-cols-[minmax(3.5rem,5.5rem)_minmax(0,1fr)_minmax(3.5rem,5.5rem)] items-center gap-2 sm:grid-cols-[minmax(5rem,7.5rem)_minmax(0,1fr)_minmax(5rem,7.5rem)] sm:gap-4 md:grid-cols-[minmax(6rem,8.5rem)_minmax(0,1fr)_minmax(6rem,8.5rem)]">
-          <BrandChevron side="left" className="h-auto w-full justify-self-end" />
-          <h1 className="text-center text-[clamp(1.35rem,4.2vw,3rem)] font-extrabold leading-[1.12] tracking-tight text-white">
-            Desafíos para la
-            <br />
-            integración del
-            <br />
-            Sistema de salud
-          </h1>
-          <BrandChevron
-            side="right"
-            className="h-auto w-full justify-self-start"
+        {/* Cuerpo: frase a la izquierda + mapa CABA a la derecha */}
+        <div className="relative grid items-stretch gap-6 sm:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] sm:gap-4 lg:gap-6">
+          <BrandHook
+            corner="br"
+            className="pointer-events-none absolute bottom-0 right-0 z-0 h-20 w-20 sm:h-28 sm:w-28"
           />
+          <div className="relative h-full">
+            <BrandHook
+              corner="tl"
+              className="pointer-events-none absolute left-0 top-0 z-0 h-16 w-16 sm:h-24 sm:w-24"
+            />
+
+            <div className="relative z-10 space-y-3 pb-4 pr-4 pt-[4.5rem] sm:pr-6 sm:pt-28">
+              <h1 className="text-[clamp(1.7rem,4.8vw,3rem)] font-black leading-[1.06] tracking-tight text-white">
+                Mapeo <span className="text-[#d2f25a]">Colectivo</span>
+              </h1>
+              <p className="max-w-lg text-base leading-relaxed text-white/80 sm:text-lg">
+                Mapa de instituciones, organizaciones y espacios que pensamos y
+                militamos una salud más justa, comunitaria y feminista. Filtrá
+                por área para conocer cada experiencia.
+              </p>
+            </div>
+          </div>
+
+          <div className="relative z-10 mx-auto w-full max-w-[20rem] sm:max-w-none sm:justify-self-end">
+            <Image
+              src="/brand/caba-mapa.png"
+              alt="Congreso de Salud de la Ciudad de Buenos Aires — mapa de CABA"
+              width={1024}
+              height={1024}
+              className="h-auto w-full select-none drop-shadow-lg"
+              priority
+            />
+          </div>
         </div>
-
-        <p className="mx-auto max-w-2xl text-center text-base leading-relaxed text-white/85 sm:text-lg">
-          Mapa de instituciones, espacios y organizaciones del congreso. Filtrá
-          por área y explorá cada ficha.
-        </p>
-
-        {local && (
-          <p className="mx-auto max-w-2xl rounded-xl border border-[#a2f25d]/45 bg-[#a2f25d]/15 px-3 py-2 text-center text-xs text-[#e4f7a8]">
-            Modo local: las fichas se guardan en un archivo JSON. Cuando
-            configures Supabase, se usará la base automáticamente.
-          </p>
-        )}
       </header>
 
       <div id="mapa" className="w-full">

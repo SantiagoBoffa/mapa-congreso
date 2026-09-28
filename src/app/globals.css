@@ -2,13 +2,14 @@
 @import "leaflet/dist/leaflet.css";
 
 :root {
-  --navy: #003355;
-  --navy-deep: #00243c;
-  --navy-mid: #0a4063;
-  --lime: #a2f25d;
-  --lime-deep: #8fd944;
-  --blue: #3a66ff;
-  --lavender: #c5c0e0;
+  --navy: #0b3a4c;
+  --navy-deep: #072f3e;
+  --navy-mid: #0f4a60;
+  --lime: #d2f25a;
+  --lime-deep: #b8e040;
+  --blue: #3b5bff;
+  --blue-soft: #5a78ff;
+  --sky: #c5dcec;
   --white: #ffffff;
   --muted: rgba(255, 255, 255, 0.82);
   --line: rgba(255, 255, 255, 0.28);
@@ -25,7 +26,8 @@
   --color-lime: var(--lime);
   --color-lime-deep: var(--lime-deep);
   --color-blue: var(--blue);
-  --color-lavender: var(--lavender);
+  --color-blue-soft: var(--blue-soft);
+  --color-sky: var(--sky);
   --font-sans: var(--font-display);
 }
 
@@ -37,7 +39,7 @@ body {
 }
 
 body {
-  background: #003355;
+  background: var(--navy);
   color: var(--white);
   font-family: var(--font-display), system-ui, sans-serif;
 }
@@ -47,7 +49,7 @@ body {
   width: 100%;
   border-radius: 0.9rem;
   border: 1px solid var(--line);
-  background: rgba(0, 20, 40, 0.55);
+  background: rgba(7, 47, 62, 0.65);
   padding: 0.65rem 0.85rem;
   color: white;
   outline: none;
@@ -60,8 +62,8 @@ body {
 
 .field-input:focus {
   border-color: var(--lime);
-  background: rgba(0, 20, 40, 0.75);
-  box-shadow: 0 0 0 3px rgba(164, 230, 84, 0.25);
+  background: rgba(7, 47, 62, 0.85);
+  box-shadow: 0 0 0 3px rgba(210, 242, 90, 0.25);
 }
 
 .chip {
@@ -86,7 +88,7 @@ body {
 }
 
 .chip-idle {
-  background: #042f4a;
+  background: #0a3344;
   color: #ffffff;
   border: 2px solid var(--blue);
 }
@@ -96,19 +98,19 @@ body {
 }
 
 .chip-idle:hover {
-  background: #0a3d5c;
+  background: #0f4458;
   transform: translateY(-1px);
 }
 
 .chip-active {
   background: var(--lime);
-  color: #003355;
+  color: var(--navy);
   border: 2px solid var(--lime);
-  box-shadow: 0 0 0 3px rgba(164, 230, 84, 0.35);
+  box-shadow: 0 0 0 3px rgba(210, 242, 90, 0.35);
 }
 
 .chip-active::before {
-  background: #003355;
+  background: var(--navy);
 }
 
 .btn-primary {
@@ -120,12 +122,12 @@ body {
   background: var(--lime);
   padding: 0.65rem 1.1rem;
   font-weight: 700;
-  color: #003355;
+  color: var(--navy);
   transition: background 0.15s ease;
 }
 
 .btn-primary:hover {
-  background: #b8ef6a;
+  background: #dff87a;
 }
 
 .btn-primary:disabled {
@@ -153,23 +155,23 @@ body {
 .panel {
   border-radius: 1.25rem;
   border: 1px solid var(--line);
-  background: #002a45;
-  box-shadow: 0 12px 28px rgba(0, 20, 40, 0.35);
+  background: var(--navy-deep);
+  box-shadow: 0 12px 28px rgba(4, 30, 40, 0.35);
 }
 
 .leaflet-container {
   font: inherit;
   z-index: 0;
-  background: #0a3048;
+  background: var(--navy-mid);
 }
 
 .mapa-congreso {
   border: 1px solid var(--line) !important;
-  box-shadow: 0 16px 40px rgba(0, 20, 40, 0.35);
+  box-shadow: 0 16px 40px rgba(4, 30, 40, 0.35);
 }
 
 .mapa-congreso .leaflet-marker-icon {
-  filter: drop-shadow(0 6px 12px rgba(0, 20, 40, 0.45));
+  filter: drop-shadow(0 6px 12px rgba(4, 30, 40, 0.45));
   transition: transform 0.15s ease;
 }
 
@@ -179,11 +181,11 @@ body {
 
 .mapa-congreso .leaflet-popup-content-wrapper {
   padding: 0;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: #01243a;
+  border-radius: 1.1rem;
+  border: none;
+  background: transparent;
   color: white;
-  box-shadow: 0 16px 36px rgba(0, 20, 40, 0.45);
+  box-shadow: 0 16px 36px rgba(4, 30, 40, 0.45);
   overflow: hidden;
 }
 
@@ -193,18 +195,19 @@ body {
 }
 
 .mapa-congreso .leaflet-popup-tip {
-  background: #01243a;
+  background: var(--blue-soft);
   box-shadow: none;
   border: none;
 }
 
+/* Cerrar: en la franja azul del header, sin pisar el título */
 .mapa-congreso .leaflet-popup-close-button {
   top: 10px !important;
   right: 10px !important;
   width: 28px !important;
   height: 28px !important;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12) !important;
+  background: rgba(11, 58, 76, 0.28) !important;
   color: var(--lime) !important;
   font-size: 18px !important;
   font-weight: 500 !important;
@@ -213,20 +216,21 @@ body {
   justify-content: center;
   line-height: 1 !important;
   padding: 0 !important;
+  z-index: 2;
 }
 
 .mapa-congreso .leaflet-popup-close-button:hover {
-  background: rgba(184, 224, 74, 0.25) !important;
+  background: rgba(11, 58, 76, 0.45) !important;
 }
 
 .mapa-congreso .leaflet-control-zoom a {
-  background: #01243a !important;
+  background: var(--navy-deep) !important;
   color: white !important;
   border-color: rgba(255, 255, 255, 0.12) !important;
 }
 
 .mapa-congreso .leaflet-control-attribution {
-  background: rgba(1, 36, 58, 0.8) !important;
+  background: rgba(7, 47, 62, 0.85) !important;
   color: rgba(255, 255, 255, 0.55) !important;
 }
 
@@ -234,24 +238,37 @@ body {
   color: var(--lime) !important;
 }
 
-.popup-ficha__body {
-  padding: 16px 18px 14px;
-  color: white;
+/* Popup estilo DateBadge: franja azul + cuerpo blue-soft */
+.popup-ficha__card {
+  overflow: hidden;
+  border-radius: 1.1rem;
+  background: var(--blue-soft);
+}
+
+.popup-ficha__head {
+  background: var(--blue);
+  padding: 14px 44px 12px 16px; /* 44px = espacio para el cerrar */
 }
 
 .popup-ficha__titulo {
-  margin: 0 28px 6px 0;
+  margin: 0;
   font-size: 15px;
-  font-weight: 700;
-  line-height: 1.3;
+  font-weight: 800;
+  line-height: 1.25;
   letter-spacing: -0.01em;
+  color: var(--lime);
+}
+
+.popup-ficha__body {
+  padding: 12px 16px 14px;
+  color: white;
 }
 
 .popup-ficha__direccion {
   margin: 0 0 10px;
   font-size: 13px;
   line-height: 1.4;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .popup-ficha__chips {
@@ -265,7 +282,7 @@ body {
   display: inline-flex;
   align-items: center;
   border-radius: 999px;
-  background: rgba(184, 224, 74, 0.22);
+  background: rgba(11, 58, 76, 0.28);
   color: var(--lime);
   font-size: 11px;
   font-weight: 700;
@@ -276,20 +293,20 @@ body {
   display: grid;
   gap: 6px;
   padding-top: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
 }
 
 .popup-ficha__meta p {
   margin: 0;
   font-size: 12px;
   line-height: 1.4;
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .popup-ficha__meta span {
   display: block;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--lime);
@@ -300,5 +317,5 @@ body {
   margin: 10px 0 0;
   font-size: 11px;
   line-height: 1.4;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.7);
 }

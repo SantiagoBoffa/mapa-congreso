@@ -90,10 +90,10 @@ export function AddressPicker({ value, onChange }: Props) {
         <div>
           <p className="text-sm font-semibold text-white">Direcciones</p>
           <p className="text-xs text-white/75">
-            Hasta 3 sedes. Escribí la calle y confirmá el pin.
+            Escribí la dirección y confirmá la ubicación
           </p>
         </div>
-        <span className="text-xs font-semibold text-[#a2f25d]">
+        <span className="text-xs font-semibold text-[#d2f25a]">
           {value.length}/3
         </span>
       </div>
@@ -101,11 +101,11 @@ export function AddressPicker({ value, onChange }: Props) {
       {value.map((sede, index) => (
         <div
           key={`${sede.direccion}-${index}`}
-          className="space-y-2 rounded-xl border border-white/25 bg-[#00243c] p-3"
+          className="space-y-2 rounded-xl border border-white/25 bg-[#072f3e] p-3"
         >
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="text-xs font-bold uppercase tracking-wide text-[#a2f25d]">
+              <p className="text-xs font-bold uppercase tracking-wide text-[#d2f25a]">
                 Dirección {index + 1}
               </p>
               <p className="text-sm text-white">{sede.direccion}</p>
@@ -114,7 +114,7 @@ export function AddressPicker({ value, onChange }: Props) {
               <button
                 type="button"
                 onClick={() => editar(index)}
-                className="text-xs font-semibold text-[#a2f25d] underline"
+                className="text-xs font-semibold text-[#d2f25a] underline"
               >
                 Editar
               </button>
@@ -139,7 +139,7 @@ export function AddressPicker({ value, onChange }: Props) {
       ))}
 
       {(puedeAgregar || editingIndex !== null) && (
-        <div className="space-y-2 rounded-xl border border-dashed border-[#a2f25d]/50 bg-[#a2f25d]/10 p-3">
+        <div className="space-y-2 rounded-xl border border-dashed border-[#d2f25a]/50 bg-[#d2f25a]/10 p-3">
           <label className="block text-sm font-semibold text-white">
             {editingIndex !== null
               ? `Editar dirección ${editingIndex + 1}`
@@ -180,14 +180,14 @@ export function AddressPicker({ value, onChange }: Props) {
                 setDraft("");
                 setResults([]);
               }}
-              className="text-xs font-semibold text-[#a2f25d] underline"
+              className="text-xs font-semibold text-[#d2f25a] underline"
             >
               Cancelar edición
             </button>
           )}
           {error && <p className="text-xs text-rose-300">{error}</p>}
           {results.length > 0 && (
-            <ul className="divide-y divide-white/15 overflow-hidden rounded-xl border border-white/25 bg-[#00243c]">
+            <ul className="divide-y divide-white/15 overflow-hidden rounded-xl border border-white/25 bg-[#072f3e]">
               {results.map((r) => (
                 <li key={`${r.lat}-${r.lng}-${r.label}`}>
                   <button

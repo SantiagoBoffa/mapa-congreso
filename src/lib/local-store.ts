@@ -17,7 +17,8 @@ async function ensureFile(): Promise<void> {
 export async function listLocal(): Promise<Organizacion[]> {
   await ensureFile();
   const raw = await fs.readFile(DATA_PATH, "utf8");
-  return JSON.parse(raw) as Organizacion[];
+  const parsed = JSON.parse(raw) as unknown;
+  return Array.isArray(parsed) ? (parsed as Organizacion[]) : [];
 }
 
 export async function appendLocal(

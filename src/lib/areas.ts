@@ -4,7 +4,7 @@ export const AREAS = [
   "Arte & Cultura",
   "Deporte",
   "Género & Diversidad",
-  "Medio ambiente",
+  "Ambiente",
   "Discapacidad",
   "Otros",
 ] as const;

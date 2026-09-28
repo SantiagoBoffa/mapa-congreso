@@ -86,7 +86,7 @@ export function FormularioFicha() {
       )}
 
       {state.ok && (
-        <p className="rounded-xl border border-[#a2f25d]/45 bg-[#a2f25d]/15 px-3 py-2 text-sm text-[#e4f7a8]">
+        <p className="rounded-xl border border-[#d2f25a]/45 bg-[#d2f25a]/15 px-3 py-2 text-sm text-[#e8f9a8]">
           ¡Listo! Te llevamos al mapa…
         </p>
       )}
