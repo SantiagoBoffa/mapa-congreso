@@ -24,7 +24,7 @@ export function AreaChips({ value, onChange, showHint = false }: Props) {
       {showHint && (
         <p className="text-xs text-white/75">Podés elegir más de una.</p>
       )}
-      <div className="flex flex-wrap gap-2">
+      <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
         {AREAS.map((area) => {
           const active = value.includes(area);
           return (

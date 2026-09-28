@@ -79,7 +79,7 @@ type MapaProps = {
   height?: string;
 };
 
-export function Mapa({ markers, className = "", height = "420px" }: MapaProps) {
+export function Mapa({ markers, className = "", height }: MapaProps) {
   const center: [number, number] = useMemo(
     () =>
       markers.length > 0
@@ -87,11 +87,12 @@ export function Mapa({ markers, className = "", height = "420px" }: MapaProps) {
         : [-34.6037, -58.3816],
     [markers],
   );
+  const popupMaxWidth = Math.min(280, window.innerWidth - 72);
 
   return (
     <div
       className={`mapa-congreso overflow-hidden rounded-2xl ${className}`}
-      style={{ height }}
+      style={height ? { height } : undefined}
     >
       <MapContainer
         center={center}
@@ -106,7 +107,13 @@ export function Mapa({ markers, className = "", height = "420px" }: MapaProps) {
         <FitBounds points={markers} />
         {markers.map((m) => (
           <Marker key={m.key} position={[m.lat, m.lng]} icon={pinPrincipal}>
-            <Popup className="popup-ficha" maxWidth={280} minWidth={220}>
+            <Popup
+              className="popup-ficha"
+              maxWidth={popupMaxWidth}
+              minWidth={Math.min(220, popupMaxWidth)}
+              autoPanPaddingTopLeft={[16, 48]}
+              autoPanPaddingBottomRight={[16, 16]}
+            >
               <div className="popup-ficha__card">
                 <div className="popup-ficha__head">
                   <p className="popup-ficha__titulo">{m.org.nombre}</p>

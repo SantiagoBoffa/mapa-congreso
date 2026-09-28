@@ -6,7 +6,7 @@ import type { MarkerItem } from "@/lib/types";
 const MapaInner = dynamic(() => import("./Mapa").then((m) => m.Mapa), {
   ssr: false,
   loading: () => (
-    <div className="flex h-[min(60vh,520px)] min-h-[320px] items-center justify-center rounded-2xl border border-white/25 bg-[#072f3e] text-sm text-white/80">
+    <div className="mapa-alto flex items-center justify-center rounded-2xl border border-white/25 bg-[#072f3e] text-sm text-white/80">
       Cargando mapa…
     </div>
   ),

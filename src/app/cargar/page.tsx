@@ -9,12 +9,12 @@ export const metadata = {
 
 export default function CargarPage() {
   return (
-    <main className="mx-auto w-full max-w-xl flex-1 px-4 py-10 sm:px-6">
-      <div className="mb-6 space-y-4">
+    <main className="mx-auto w-full max-w-xl flex-1 px-4 pb-10 pt-6 sm:px-6 sm:pt-10">
+      <div className="mb-5 space-y-3 sm:mb-6 sm:space-y-4">
         <BrandLockup variant="compact" />
         <Link
           href="/"
-          className="inline-block text-sm font-semibold text-[#d2f25a] hover:underline"
+          className="inline-flex min-h-11 items-center text-sm font-semibold text-[#d2f25a] hover:underline"
         >
           ← Volver al mapa
         </Link>

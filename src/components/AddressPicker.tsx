@@ -110,18 +110,18 @@ export function AddressPicker({ value, onChange }: Props) {
               </p>
               <p className="text-sm text-white">{sede.direccion}</p>
             </div>
-            <div className="flex gap-2">
+            <div className="-my-2 -mr-2 flex shrink-0">
               <button
                 type="button"
                 onClick={() => editar(index)}
-                className="text-xs font-semibold text-[#d2f25a] underline"
+                className="min-h-11 px-2 text-sm font-semibold text-[#d2f25a] underline"
               >
                 Editar
               </button>
               <button
                 type="button"
                 onClick={() => quitar(index)}
-                className="text-xs font-semibold text-rose-300 underline"
+                className="min-h-11 px-2 text-sm font-semibold text-rose-300 underline"
               >
                 Quitar
               </button>
@@ -180,7 +180,7 @@ export function AddressPicker({ value, onChange }: Props) {
                 setDraft("");
                 setResults([]);
               }}
-              className="text-xs font-semibold text-[#d2f25a] underline"
+              className="min-h-11 text-sm font-semibold text-[#d2f25a] underline"
             >
               Cancelar edición
             </button>
@@ -193,7 +193,7 @@ export function AddressPicker({ value, onChange }: Props) {
                   <button
                     type="button"
                     onClick={() => elegirResultado(r)}
-                    className="w-full px-3 py-2 text-left text-sm text-white hover:bg-white/10"
+                    className="min-h-11 w-full px-3 py-2.5 text-left text-sm text-white hover:bg-white/10"
                   >
                     {r.label}
                   </button>

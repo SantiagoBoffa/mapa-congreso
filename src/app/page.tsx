@@ -9,27 +9,27 @@ export default async function HomePage() {
   const organizaciones = await listOrganizacionesVisibles();
 
   return (
-    <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-6 sm:py-12">
-      <header className="relative mb-8 sm:mb-10">
+    <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 sm:px-6 sm:py-12">
+      <header className="relative mb-6 sm:mb-10">
         {/* Logo y fecha alineados abajo, con el mismo aire hasta el título y el mapa */}
-        <div className="relative z-20 mb-4 flex items-center justify-between gap-4 sm:mb-5">
+        <div className="relative z-20 mb-3 flex items-center justify-between gap-3 sm:mb-5 sm:gap-4">
           <BrandLockup variant="full" />
           <DateBadge className="shrink-0" />
         </div>
 
-        {/* Cuerpo: frase a la izquierda + mapa CABA a la derecha */}
-        <div className="relative grid items-stretch gap-6 sm:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] sm:gap-4 lg:gap-6">
-          <BrandHook
-            corner="br"
-            className="pointer-events-none absolute bottom-0 right-0 z-0 h-20 w-20 sm:h-28 sm:w-28"
-          />
-          <div className="relative h-full">
+        {/* Cuerpo: frase enmarcada por los ganchos + mapa CABA */}
+        <div className="grid items-center gap-2 sm:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] sm:gap-4 lg:gap-6">
+          <div className="relative">
             <BrandHook
               corner="tl"
               className="pointer-events-none absolute left-0 top-0 z-0 h-16 w-16 sm:h-24 sm:w-24"
             />
+            <BrandHook
+              corner="br"
+              className="pointer-events-none absolute bottom-0 right-0 z-0 h-20 w-20 sm:h-28 sm:w-28"
+            />
 
-            <div className="relative z-10 space-y-3 pb-4 pr-4 pt-[4.5rem] sm:pr-6 sm:pt-28">
+            <div className="relative z-10 space-y-3 pb-14 pr-4 pt-[4.5rem] sm:pb-20 sm:pr-6 sm:pt-28">
               <h1 className="text-[clamp(1.7rem,4.8vw,3rem)] font-black leading-[1.06] tracking-tight text-white">
                 Mapeo <span className="text-[#d2f25a]">Colectivo</span>
               </h1>
@@ -41,7 +41,7 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="relative z-10 mx-auto w-full max-w-[20rem] sm:max-w-none sm:justify-self-end">
+          <div className="relative z-10 order-first mx-auto w-full max-w-[12rem] sm:order-none sm:max-w-none sm:justify-self-end">
             <Image
               src="/brand/caba-mapa.png"
               alt="Congreso de Salud de la Ciudad de Buenos Aires — mapa de CABA"
