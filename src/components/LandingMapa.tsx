@@ -6,6 +6,7 @@ import type { Area } from "@/lib/areas";
 import type { MarkerItem, Organizacion } from "@/lib/types";
 import { AreaChips } from "./AreaChips";
 import { DescripcionExpandible } from "./DescripcionExpandible";
+import { TextoEnlazado } from "./TextoEnlazado";
 import { MapaClient } from "./MapaClient";
 
 const PAGE_SIZE = 5;
@@ -170,7 +171,7 @@ export function LandingMapa({ organizaciones }: Props) {
           >
             <ul className="divide-y divide-white/15">
               {visibles.map((org) => (
-                <li key={org.id} className="py-3 first:pt-0">
+                <li key={org.id} className="py-3 wrap-anywhere first:pt-0">
                   <p className="font-bold text-white">{org.nombre}</p>
                   <p className="mt-1 text-xs font-semibold text-[#d2f25a]">
                     {org.areas.join(" · ")}
@@ -187,11 +188,13 @@ export function LandingMapa({ organizaciones }: Props) {
                   </ul>
                   {org.contacto && (
                     <p className="mt-1.5 text-xs text-white/80">
-                      Contacto: {org.contacto}
+                      Contacto: <TextoEnlazado texto={org.contacto} />
                     </p>
                   )}
                   {org.redes && (
-                    <p className="text-xs text-white/80">Redes: {org.redes}</p>
+                    <p className="text-xs text-white/80">
+                      Redes: <TextoEnlazado texto={org.redes} redes />
+                    </p>
                   )}
                 </li>
               ))}

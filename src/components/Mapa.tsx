@@ -12,6 +12,7 @@ import {
 import L from "leaflet";
 import type { MarkerItem } from "@/lib/types";
 import { DescripcionExpandible } from "./DescripcionExpandible";
+import { TextoEnlazado } from "./TextoEnlazado";
 
 function createPinIcon(color: string, accent = "#fff") {
   const svg = encodeURIComponent(`
@@ -163,14 +164,14 @@ function FichaPopup({
             <div className="popup-ficha__meta">
               {m.org.contacto && (
                 <p>
-                  <span>Contacto</span>
-                  {m.org.contacto}
+                  <span className="popup-ficha__etiqueta">Contacto</span>
+                  <TextoEnlazado texto={m.org.contacto} />
                 </p>
               )}
               {m.org.redes && (
                 <p>
-                  <span>Redes</span>
-                  {m.org.redes}
+                  <span className="popup-ficha__etiqueta">Redes</span>
+                  <TextoEnlazado texto={m.org.redes} redes />
                 </p>
               )}
             </div>

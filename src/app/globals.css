@@ -283,6 +283,7 @@ body {
 /* Popup estilo DateBadge: franja azul + cuerpo blue-soft */
 .popup-ficha__card {
   overflow: hidden;
+  overflow-wrap: anywhere;
   border-radius: 1.1rem;
   background: var(--blue-soft);
 }
@@ -357,7 +358,7 @@ body {
   color: rgba(255, 255, 255, 0.95);
 }
 
-.popup-ficha__meta span {
+.popup-ficha__etiqueta {
   display: block;
   font-size: 10px;
   font-weight: 800;
@@ -365,6 +366,41 @@ body {
   text-transform: uppercase;
   color: var(--lime);
   margin-bottom: 1px;
+}
+
+.texto-enlace {
+  color: var(--lime);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+
+.leaflet-container a.texto-enlace {
+  color: var(--lime);
+}
+
+.leaflet-container a.texto-enlace:hover {
+  color: white;
+}
+
+.mail-copiar {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  margin-left: 0.15rem;
+  border-radius: 999px;
+  background: rgba(210, 242, 90, 0.18);
+  padding: 0 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--lime);
+  vertical-align: baseline;
+}
+
+.mail-copiar:hover {
+  background: rgba(210, 242, 90, 0.32);
 }
 
 .popup-ficha__otras {

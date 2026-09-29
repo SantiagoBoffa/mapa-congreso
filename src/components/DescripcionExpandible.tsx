@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { DESCRIPCION_PREVIEW } from "@/lib/descripcion";
+import { TextoEnlazado } from "./TextoEnlazado";
 
 function recortar(texto: string, limite: number): string {
   const corte = texto.slice(0, limite);
   const ultimoEspacio = corte.lastIndexOf(" ");
   const base = ultimoEspacio > limite * 0.6 ? corte.slice(0, ultimoEspacio) : corte;
-  return `${base.replace(/[\s.,;:]+$/, "")}…`;
+  return `${base.replace(/[\s.,;:]+$/, "") || base}…`;
 }
 
 type Props = {
@@ -31,8 +32,8 @@ export function DescripcionExpandible({
   const visible = esLarga && !abierta ? recortar(limpio, DESCRIPCION_PREVIEW) : limpio;
 
   return (
-    <p className={`whitespace-pre-line ${className}`}>
-      {visible}
+    <p className={`whitespace-pre-line wrap-anywhere ${className}`}>
+      <TextoEnlazado texto={visible} />
       {esLarga && (
         <>
           {" "}
